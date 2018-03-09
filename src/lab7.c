@@ -4,8 +4,8 @@
  *     Infix expression is provided as a single, quoted command-line argument.
  *
  *  COMP220: Lab 7 Starter Project - Stacks & Queues
- *  Author:  Joseph Fall
- *  Date:    Mar. 6, 2018
+ *  Author:  Joseph Fall, Karan Nedungadi
+ *  Date:    Mar. 6, 2018 (Joseph), Mar. 8, 2018 (Karan)
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -234,7 +234,12 @@ Queue_t toPostfix(Queue_t infix_tokens)
 // POST: returns the result of evaluating the post-fix expression.
 int evalExpr(Queue_t expression)
 {
-
+	Node_t* cur = experession.head;
+	int op1, op2, value;
+	while(cur != NULL) {
+		if(isOperator(cur)) {
+		}
+	}
 	printf("NOT IMPLEMENTED YET -- that's your job ;-)\n");
 	return -1;  // STUB
 
