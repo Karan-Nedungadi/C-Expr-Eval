@@ -27,8 +27,9 @@ bool isOpenBracket(char* token);
 bool isCloseBracket(char* token);
 bool isBracket(char* token);
 int precedence(char* token);
+int operate(int op1, int op2, char operation);
 
-// Experession Evaluator Functions
+// expression Evaluator Functions
 Queue_t toPostfix(Queue_t infix_tokens);
 int evalExpr(Queue_t postfix_tokens);
 
@@ -164,7 +165,7 @@ Queue_t tokenize(char* expression)
 }
 
 //********************************************
-//  In-fix experession --> Post-fix expression
+//  In-fix Expression --> Post-fix expression
 //
 // NOTE: a valid expression for this module may only contain:
 //		 -- integer or symbolic operands
@@ -208,6 +209,7 @@ Queue_t toPostfix(Queue_t infix_tokens)
 		}
 		else	{ // Operand
 			// TODO: add some better error handling here
+			
 			assert( isOperand(token) );  // token MUST otherwise be a valid operand
 			// Simply queue up the operand for evaluation
 			qEnqueue(&expression, token);
@@ -234,13 +236,43 @@ Queue_t toPostfix(Queue_t infix_tokens)
 // POST: returns the result of evaluating the post-fix expression.
 int evalExpr(Queue_t expression)
 {
-	Node_t* cur = experession.head;
-	int op1, op2, value;
-	while(cur != NULL) {
-		if(isOperator(cur)) {
+	IntStack_t stack = istackCreate();
+	qPrint(expression);
+	int op1, op2;
+	while(!qIsEmpty(expression)) {
+		char*c = qDequeue(&expression);
+		if(isOperand(c)){
+			istackPush(&stack, operandValue(c));
+		}
+		else {
+			op2 = istackPop(&stack);
+			op1 = istackPop(&stack);
+			istackPush(&stack, operate(op1, op2, *c));
 		}
 	}
-	printf("NOT IMPLEMENTED YET -- that's your job ;-)\n");
-	return -1;  // STUB
+	int item = istackPop(&stack);
+	assert(istackIsEmpty(stack));
+	istackDestroy(&stack);
+	return item;
+}
 
+
+int operate(int op1, int op2, char operation)
+{
+	int value;
+	switch (operation) {
+		case '+':
+			value = op1 + op2;
+			break;
+		case '-':
+			value = op1 - op2;
+			break;
+		case '/':
+			value = op1 / op2;
+			break;
+		case '*':
+			value = op1 * op2;
+			break;
+	}
+	return value;
 }
