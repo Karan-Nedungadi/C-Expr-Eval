@@ -5,6 +5,7 @@
  *
  *  COMP220: Lab 7 Starter Project - Stacks & Queues
  *  Author:  Joseph Fall, Karan Nedungadi
+ *  Help:   Tim Wriglesworth
  *  Date:    Mar. 6, 2018 (Joseph), Mar. 8, 2018 (Karan)
  */
 #include <stdio.h>
